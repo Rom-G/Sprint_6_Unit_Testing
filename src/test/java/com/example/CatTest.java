@@ -30,12 +30,17 @@ public class CatTest {
     }
 
     @Test
-    public void getFoodReturnsPredatorEatMeat() throws Exception {
+    public void getFoodCallsPredatorEatMeat() throws Exception {
+        cat.getFood();
+        Mockito.verify(feline).eatMeat();
+    }
+
+    @Test
+    public void getFoodReturnsPredatorEatMeatResult() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
 
         assertEquals(expectedFood, cat.getFood());
-        Mockito.verify(feline).eatMeat();
     }
 
 }
