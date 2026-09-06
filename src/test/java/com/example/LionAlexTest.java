@@ -10,12 +10,11 @@ import static org.junit.Assert.assertEquals;
 
 public class LionAlexTest {
 
-    private Feline feline;
     private LionAlex alex;
 
     @Before
     public void setUp() throws Exception {
-        feline = new Feline();
+        Feline feline = new Feline();
         alex = new LionAlex(feline);
     }
 
@@ -34,13 +33,21 @@ public class LionAlexTest {
     }
 
     @Test
-    public void getKittensReturnsFelineGetKittensWith0() throws Exception {
+    public void getKittensDelegatesToFelineWithZero() throws Exception {
+        Feline mockFeline = Mockito.mock(Feline.class);
+        LionAlex mockAlex = new LionAlex(mockFeline);
+        mockAlex.getKittens();
+
+        Mockito.verify(mockFeline).getKittens(0);
+    }
+
+    @Test
+    public void getKittensReturnsDelegatedValue() throws Exception {
         Feline mockFeline = Mockito.mock(Feline.class);
         LionAlex mockAlex = new LionAlex(mockFeline);
         Mockito.when(mockFeline.getKittens(0)).thenReturn(0);
 
         assertEquals(0, mockAlex.getKittens());
-        Mockito.verify(mockFeline).getKittens(0);
     }
 
 }
