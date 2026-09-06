@@ -31,7 +31,9 @@ public class CatTest {
 
     @Test
     public void getFoodCallsPredatorEatMeat() throws Exception {
+        Mockito.when(feline.eatMeat()).thenReturn(List.of());
         cat.getFood();
+
         Mockito.verify(feline).eatMeat();
     }
 

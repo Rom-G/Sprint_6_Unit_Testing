@@ -39,20 +39,34 @@ public class LionTest {
     }
 
     @Test
-    public void getKittensReturnsFelineGetKittensNoArg() throws Exception {
-        int expectedNumberOfKittens = 1;
-        Mockito.when(feline.getKittens()).thenReturn(1);
+    public void getKittensDelegatesToFelineNoArg() throws Exception {
+        lion.getKittens();
 
-        assertEquals(expectedNumberOfKittens, lion.getKittens());
         Mockito.verify(feline).getKittens();
     }
 
     @Test
-    public void getFoodReturnsPredatorEatMeat() throws Exception {
+    public void getKittensReturnsDelegatedValue() throws Exception {
+        int expectedNumberOfKittens = 1;
+        Mockito.when(feline.getKittens()).thenReturn(expectedNumberOfKittens);
+
+        assertEquals(expectedNumberOfKittens, lion.getKittens());
+    }
+
+    @Test
+    public void getFoodCallsPredatorEatMeat() throws Exception {
+        Mockito.when(feline.eatMeat()).thenReturn(List.of());
+        lion.getFood();
+
+        Mockito.verify(feline).eatMeat();
+    }
+
+    @Test
+    public void getFoodReturnsPredatorEatMeatResult() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
 
         assertEquals(expectedFood, lion.getFood());
-        Mockito.verify(feline).eatMeat();
     }
+
 }
